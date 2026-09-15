@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageCheck extends StatefulWidget {
   const LocalStorageCheck({super.key});
@@ -42,9 +43,10 @@ class _LocalStorageCheckState extends State<LocalStorageCheck> {
             SizedBox(height: 100,),
 
             ElevatedButton(
-                onPressed: (){
-                  name = dataController.text;
-                  setState(() {});
+                onPressed: () async {
+                  final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  prefs.setString("name"," ${dataController.text}");
+                  // name = dataController.text;
                 },
               style:ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,),
@@ -59,9 +61,11 @@ class _LocalStorageCheckState extends State<LocalStorageCheck> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                    onPressed: (){
-                      name=dataController.text;
-                      setState(() {});
+                    onPressed: ()async{
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                     var a = prefs.getString("name");
+                     name = a.toString();
+                     setState(() {});
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,iconColor: Colors.white),
@@ -70,7 +74,10 @@ class _LocalStorageCheckState extends State<LocalStorageCheck> {
                 SizedBox(width: 150,),
 
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: ()async{
+                    final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    prefs.remove("name");
+                  },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,iconColor: Colors.white),
                   child: Icon(Icons.delete),),
